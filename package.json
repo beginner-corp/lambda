@@ -1,0 +1,25 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "- dead easy npm run scripts for: init, deploy & rollback - no implicit conventions / everything configurable in package.json / smart defaults - no perscribed project structure or folder constraints - author lambda functions as pure node style callbacks (aka errbacks) - return clean slack rpc-style json (works well w/ api gateway) - familiar middleware pattern for composing functions as a lambda - author event sources like dynamodb triggers and sns topics this way too!",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.2",
+    "aws-sdk": "^2.2.47",
+    "lodash": "^4.6.1",
+    "serialize-error": "^2.0.0"
+  }
+}
