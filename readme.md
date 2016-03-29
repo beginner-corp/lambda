@@ -2,7 +2,7 @@
 
 ---
 
-# @smallwins/lambda
+# λ @smallwins/lambda
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
@@ -28,7 +28,9 @@ exports.handler = function sum(event, callback) {
     errors.push(TypeError('event.query not an object'))
   }
   if (errors.length) {
-    context.fail(errors) // returns [{}, {}, {}, {}]
+    // otherwise Error would return [{}, {}, {}, {}]
+    var err = errors.map(function(e) {return e.message})
+    context.fail(err) 
   }
   else {
     context.succeed({count:event.query.x + 1})
@@ -36,7 +38,9 @@ exports.handler = function sum(event, callback) {
 }
 ```
 
-A huge amount of this code is working around quirky parameter validations. The latter part of the code uses the funky AWS `context` object. We do better:
+A huge amount of this code is working around quirky parameter validations. Builtin `Error` needs manual serialization (and you still lose the stack trace). The latter part of the code uses the funky AWS `context` object. 
+
+We can do better:
 
 ```javascript
 var validate = require('@smallwins/validate')
@@ -52,16 +56,23 @@ function sum(event, callback) {
     callback(errors)
   }
   else {
-    callback(null, {count:event.query.x + 1})
+    var result = {count:event.query.x + 1}
+    callback(null, result)
   }
 }
 
 exports.handler = lambda(sum)
 ```
 
+The `validate` library above takes care of builtin parameter validations. It can also handle custom types. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. Finally we wrap our function using `lambda` which will return a function with an AWS Lambda friendly signature.
+
 ## easily chain dependant actions ala middleware
 
-Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a lambda from three functions: validate parameters, check for an authorized account and then return data safely (or callback with errors).
+Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a Lambda that: 
+
+- Validate parameters
+- Check for an authorized account
+- And then either returns data safely (or calls back with errors)
 
 ```javascript
 var validate = require('@smallwins/validate')
@@ -102,7 +113,11 @@ function safe(event, callback) {
 exports.handler = lambda(valid, authorized, safe)
 ```
 
+In the example above our functions are executed in series. Errors will halt execution and return immediately so if we make it the last function we just send back the resulting account data. Clean!
+
 ## save a record from a dynamodb trigger    
+
+AWS DynamoDB can invoke a Lambda function if anything happens to a table. 
 
 ```javascript
 var lambda = require('@smallwins/lambda')
