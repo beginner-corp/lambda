@@ -18,7 +18,7 @@ function lambda() {
 
   // fail loud if the programmer passes something other than a fn
   var notOnlyFns = _.reject(fns, _.isFunction)
-  if (notOnlyFns) {
+  if (notOnlyFns.length) {
     throw Error('lambda only accepts callback functions as arguments')
   }
 
@@ -32,10 +32,13 @@ function lambda() {
 
     // the real worker here
     async.waterfall(fns, function(err, result) {
-      // deliberate use context.succeed; there is no case where you want
-      // the (current) context.fail behavior (but happy to discuss in an issue)!
-      if (err) {
-        var errors = (_.isArray(err)? err : [err]).map(errback) // serialize errors
+      if (err) { 
+        // asummptions: 
+        // - err should be an array of Errors
+        // - because lambda deals in json we need to serialize them
+        var errors = (_.isArray(err)? err : [err]).map(errback)
+        // deliberate use context.succeed; 
+        // there is no (good) use case for the (current) context.fail behavior (but happy to discuss in an issue)!
         context.succeed(errors)
       }
       else {

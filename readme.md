@@ -1,10 +1,6 @@
 # @smallwins/lambda
 
-- dead easy npm run scripts for: init, deploy & rollback
-- no implicit conventions / everything configurable in package.json / smart defaults
-- no perscribed project structure or folder constraints
 - author lambda functions as pure node style callbacks (aka errbacks)
-- return clean slack rpc-style json (works well w/ api gateway)
 - familiar middleware pattern for composing functions as a lambda
 - author event sources like dynamodb triggers and sns topics this way too!
 
@@ -40,7 +36,7 @@ A better way!
 
 ```javascript
 var lambda = require('@smallwins/lambda')
-var validate = require('validate-params-schema')
+var validate = require('@smallwins/validate')
 
 function sum(event, callback) {
   var schema = {
@@ -73,15 +69,15 @@ function authorized(event, callback) {
     callback(null, event)
   }
   else {
-    callback([Error('not found')])
+    callback(Error('not found'))
   }
 }
 
-function protected(event, callback) {
+function safe(event, callback) {
   callback(null, {account:event.account})
 }
 
-exports.handler = lambda(authorized, protected)
+exports.handler = lambda(authorized, safe)
 ```
 
 ## save a record from a dynamodb trigger    
@@ -99,19 +95,3 @@ exports.handler = lambda.sources.dynamo.save(saveVersion)
 ## app api
 
 - `lambda(...fns)`
-- `lambda.sources.dynamo(...fns)`
-- `lambda.sources.sns(...fns)`
-
-## scripting api
-
-- `lambda.scripts.env((err, result)=>)`
-- `lambda.scripts.init(path, (err, result)=>)`
-- `lambda.scripts.deploy`
-- `lambda.scripts.package`
-- `lambda.scripts.rollback`
-
-## conventions
-
-- slack style results
-- errors always an array of Errors but serialized at the last callsite as array of json objects
-- results always an object with at least one key
