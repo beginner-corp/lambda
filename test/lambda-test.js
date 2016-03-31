@@ -51,7 +51,7 @@ test('can invoke a successful lambda', t=> {
   // mocks don't need a cray mocking lib
   var fakeEvent = {}
   var fakeContext = {
-    succeed: function fakeSucceed(v) { 
+    succeed: function fakeSucceed(v) {
       t.ok(v.allGood, 'got the event!')
       console.log('fake succeed called with ', v)
     }
@@ -64,13 +64,13 @@ test('can invoke a successful lambda', t=> {
 test('can invoke a failful lambda', t=> {
   t.plan(1)
   // always succeeds
-  function tester(event, callback) {
+  function tester(callback) {
     callback(Error('wtf'))
   }
   // mocks don't need a cray mocking lib
   var fakeEvent = {}
   var fakeContext = {
-    succeed: function fakeSucceed(v) { 
+    succeed: function fakeSucceed(v) {
       t.ok(isArray(v), 'got an Errors array')
       console.log('faked fail called with ', v)
     }
