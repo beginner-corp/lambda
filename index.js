@@ -9,7 +9,7 @@ var errback = require('serialize-error')
 function lambda() {
 
   // grab all the functions
-  var fns = [].splice.call(arguments, 0)
+  var fns = [].slice.call(arguments, 0)
 
   // fail loudly for programmer not passing anything
   if (fns.length === 0) {
