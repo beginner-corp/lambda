@@ -2,16 +2,14 @@ var async = require('async')
 var _ = require('lodash')
 var errback = require('serialize-error')
 
-var firstRun = true
-
 /**
  * lambda - accepts node style callbacks and returns an aws lambda function
  *
  */
 function lambda() {
 
-  // grab all the functions
-  var fns = [].slice.call(arguments, 0)
+  var firstRun = true                   // important to keep this here in this closure
+  var fns = [].slice.call(arguments, 0) // grab all the functions
 
   // fail loudly for programmer not passing anything
   if (fns.length === 0) {
@@ -27,12 +25,20 @@ function lambda() {
   // returns a lambda sig
   return function(event, context) {
 
-    if(firstRun) {
-      // put this callback at the front of the line to pass in the event data
+    // this is to avoid warm start (sometimes lambda containers are cached … yeaaaaah.)
+    if (firstRun) {
       fns.unshift(function(callback) {
         callback(null, event)
       })
       firstRun = false
+    }
+    else {
+      // mutates! wtf. remove the cached callback
+      fns.shift()
+      // add the fresh event
+      fns.unshift(function(callback) {
+        callback(null, event)
+      })
     }
 
     // the real worker here
