@@ -50,7 +50,7 @@ function lambda() {
         var errors = (_.isArray(err)? err : [err]).map(errback)
         // deliberate use context.succeed;
         // there is no (good) use case for the (current) context.fail behavior (but happy to discuss in an issue)!
-        context.succeed(errors)
+        context.succeed({ok:false, errors:errors})
       }
       else {
         context.succeed(result)
