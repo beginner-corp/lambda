@@ -94,15 +94,16 @@ function valid(event, callback) {
 }
 
 function authorized(event, callback) {
-  if (event.body.username === 'sutro' && event.body.password === 'cat') {
+  var loggedIn = event.body.username === 'sutro' && event.body.password === 'cat'
+  if (!loggedIn) {
+    callback(Error('not found'))
+  }
+  else {
     event.account = {
-      loggedIn: true,
+      loggedIn: loggedIn,
       name: 'sutro furry pants'
     }
     callback(null, event)
-  }
-  else {
-    callback(Error('not found'))
   }
 }
 
@@ -130,3 +131,33 @@ exports.handler = lambda(function saveVersion(record, callback) {
 ## app api
 
 - `lambda(...fns)`
+
+## scripting api
+
+`@smallwins/lambda` includes some helpful code perfect for npm scripts. If you have a project that looks like this:
+
+```
+project-of-lambdas/
+ |-test/
+ |-src/
+ |  '-lambdas/
+ |     |-signup/
+ |     |-login/
+ |     '-logout/
+ |-package.json
+```
+
+And a `package.json` like this:
+
+```javascript
+{
+  "name":"project-of-lambdas",
+  "scripts": {
+    "create":"AWS_PROFILE=smallwins lambda-create",
+    "deploy":"AWS_PROFILE=smallwins lambda-deploy",
+    "list":"AWS_PROFILE=smallwins lambda-list"
+  }
+}
+```
+
+You can deploy with `npm run deploy src/lambdas/signup brian` (and the lambda will be deployed to with the alias `brian`.

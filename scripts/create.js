@@ -20,6 +20,9 @@ var package = {
     "name": last(name.split('/')),
     "version": "1.0.0",
     "main": "index",
+    "lambda": {
+      "role": "lambda_basic_execution"
+    },
     "scripts": {
       "test": "node test | tap-spec"
     },

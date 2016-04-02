@@ -4,11 +4,15 @@
   "description": "Author your AWS Lambda functions as node style errbacks.",
   "main": "index",
   "scripts": {
-    "test": "tape test/**-test.js | tap-spec"
+    "test": "tape test/**-test.js | tap-spec",
+    "create": "./scripts/create.js",
+    "list": "./scripts/list.js",
+    "deploy": "./scripts/deploy.js"
   },
   "bin": {
     "lambda-create": "./scripts/create.js",
-    "lambda-list": "./scripts/list.js"
+    "lambda-list": "./scripts/list.js",
+    "lambda-deploy": "./scripts/deploy.js"
   },
   "keywords": [
     "aws",
@@ -24,10 +28,13 @@
   "dependencies": {
     "async": "^2.0.0-rc.2",
     "aws-sdk": "^2.2.47",
+    "bauer-zip": "^1.0.2",
     "chalk": "^1.1.3",
+    "easy-zip": "0.0.4",
     "lodash": "^4.7.0",
     "mkdirp": "^0.5.1",
     "path-exists": "^2.1.0",
+    "rimraf": "^2.5.2",
     "serialize-error": "^2.0.0"
   }
 }
