@@ -67,7 +67,7 @@ exports.handler = lambda(sum)
 
 `@smallwins/validate` takes care of parameter validations. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
 
-#### easily chain dependant actions ala middleware :loop::loop::loop:
+#### :loop::loop::loop: easily chain dependant actions ala middleware :loop::loop::loop:
 
 Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a Lambda that: 
 
@@ -114,7 +114,7 @@ exports.handler = lambda(valid, authorized, safe)
 
 In the example above our functions are executed in series passing event through each invocation. `valid` will pass event to `authorized` which in turn passes it to `save`. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
 
-#### save a record from a dynamodb trigger :point_right::floppy_disk:
+#### :point_right: save a record from a dynamodb trigger :floppy_disk:
 
 AWS DynamoDB can invoke a Lambda function if anything happens to a table. 
 
@@ -129,7 +129,7 @@ function save(record, callback) {
 exports.handler = lambda.sources.dynamo.save(save)
 ```
 
-#### api :thought_balloon:
+#### :love_letter: api :thought_balloon: :sparkles:
 
 - `lambda(...fns)`
 - `lambda.sources.dynamo.all(...fns)`
@@ -148,7 +148,7 @@ function handler(event, callback) {
 }
 ```
 
-#### regarding errors :x::interrobang:
+#### :heavy_exclamation_mark: regarding errors :x::interrobang:
 
 Good error handling makes your programs far easier to maintain. (This is a good guide.)[https://www.joyent.com/developers/node/design/errors]. When using `@smallwins/lambda` always use `Error` type as the first parameter to callback: 
 
@@ -181,7 +181,7 @@ function fails(event, callback) {
 }
 ```
 
-#### scripting api :memo:
+#### :hash: scripting api :memo:
 
 `@smallwins/lambda` includes some helpful automation code perfect for npm scripts. If you have a project that looks like this:
 
