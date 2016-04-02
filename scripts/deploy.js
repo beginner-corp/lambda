@@ -208,6 +208,7 @@ async.waterfall([
       process.exit(1)
     }
     else {
+      console.log('\n')
       process.exit(0)
     }
   }
