@@ -121,19 +121,20 @@ var lambda = require('@smallwins/lambda')
 
 function save(record, callback) {
   console.log('save a version ', record)
+  callback(null, record)
 }
 
 exports.handler = lambda.sources.dynamo.save(save)
 ```
 
-## app api
+## api
 
 - `lambda(...fns)`
 - `lambda.sources.dynamo.all(...fns)`
 - `lambda.sources.dynamo.save(...fns)`
 - `lambda.sources.dynamo.insert(...fns)`
-- `lambda.sources.dynamo.update(...fns)`
-- `lambda.sources.dynamo.destroy(...fns)`
+- `lambda.sources.dynamo.modify(...fns)`
+- `lambda.sources.dynamo.remove(...fns)`
 - `lambda.sources.sns(...fns)`
 
 A handler looks something like this
@@ -141,9 +142,41 @@ A handler looks something like this
 ```javascript    
 function handler(event, callback) {
   // process event, use to pass data
-  callback(null, event)
-  // callback(Error('something went wrong') // pass one error
-  // callback([Error('missing email'), Error('missing password')]) // or array of errors
+  var result = {ok:true, event:event}
+  callback(null, result)
+}
+```
+
+### errors
+
+Always use `Error` type as the first parameter to callback: 
+
+```javascript
+function fails(event, callback) {
+  callback(Error('something went wrong')
+}
+```
+
+Or an array of `Error`s:
+
+```javascript
+function fails(event, callback) {
+  callback([
+    Error('missing email'), 
+    Error('missing password')
+  ])
+}
+```
+
+`@smallwins/lambda` serializes error into slack-rpc style JSON making them easy to work from API Gateway:
+
+```javascript
+{
+  ok: false, 
+  errors: [
+    {name:'Error', message:'missing email', stack'...'},
+    {name:'Error', message:'missing password', stack'...'}
+  ]
 }
 ```
 

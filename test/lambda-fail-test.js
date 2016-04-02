@@ -11,7 +11,7 @@ test('can invoke a failful lambda', t=> {
   var fail = lambda(tester)
   fail({}, {
     succeed: function fakeSucceed(v) {
-      t.ok(isArray(v), 'got an Errors array')
+      t.ok(isArray(v.errors), 'got an Errors array')
       console.log('faked fail called with ', v)
     }
   })

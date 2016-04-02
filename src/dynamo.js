@@ -60,14 +60,9 @@ function trigger(types) {
 }
 
 module.exports = {
-  dynamo: {
-    insert: trigger(['INSERT'                    ]),
-    modify: trigger(['MODIFY'                    ]),
-    remove: trigger(['REMOVE'                    ]),
-    save:   trigger(['INSERT', 'MODIFY'          ]),
-    all:    trigger(['INSERT', 'MODIFY', 'REMOVE'])
-  },
-  sns: {
-
-  }
+  insert: trigger(['INSERT'                    ]),
+  modify: trigger(['MODIFY'                    ]),
+  remove: trigger(['REMOVE'                    ]),
+  save:   trigger(['INSERT', 'MODIFY'          ]),
+  all:    trigger(['INSERT', 'MODIFY', 'REMOVE'])
 }
