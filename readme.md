@@ -214,10 +214,10 @@ And a `package.json` like this:
 }
 ```
 
-- <kbd>npm run create src/lambdas/forgot</kbd> creates a new lambda 
-- `npm run list` lists all deployed lambdas 
-- `npm run deploy src/lambdas/signup brian` deploys the lambda with the alias `brian`
-- `npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'` to invoke a lambda
+:point_right: <kbd>npm run create src/lambdas/forgot</kbd> creates a new lambda 
+:point_right: <kbd>npm run list</kbd> lists all deployed lambdas 
+:point_right: <kbd>npm run deploy src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
+:point_right:<kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to invoke a lambda
 
 The `./scripts/invoke.js` is also a module and useful for testing.
 
