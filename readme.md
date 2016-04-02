@@ -181,7 +181,7 @@ function fails(event, callback) {
 }
 ```
 
-#### :hash: scripting api :memo:
+#### :hash: <kbd>#!</kbd> scripting api :memo:
 
 `@smallwins/lambda` includes some helpful automation code perfect for npm scripts. If you have a project that looks like this:
 
