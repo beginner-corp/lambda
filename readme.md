@@ -2,7 +2,7 @@
 
 ---
 
-## @smallwins/lambda λ:satellite: 
+## @smallwins/lambda :raised_hands::seedling:λ :satellite::satellite::satellite: 
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
