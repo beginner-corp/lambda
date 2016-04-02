@@ -7,6 +7,7 @@
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
 - Event sources like DynamoDB triggers and SNS topics too
+- Helpful npm scripts `lambda-create`, `lambda-list` and `lambda-deploy`
 
 ## return a result to api gateway
 
@@ -142,9 +143,13 @@ project-of-lambdas/
  |-src/
  |  '-lambdas/
  |     |-signup/
+ |     |  |-index.js
+ |     |  |-test.js
+ |     |  '-package.json
  |     |-login/
  |     '-logout/
- |-package.json
+ '-package.json
+
 ```
 
 And a `package.json` like this:
@@ -154,10 +159,12 @@ And a `package.json` like this:
   "name":"project-of-lambdas",
   "scripts": {
     "create":"AWS_PROFILE=smallwins lambda-create",
-    "deploy":"AWS_PROFILE=smallwins lambda-deploy",
-    "list":"AWS_PROFILE=smallwins lambda-list"
+    "list":"AWS_PROFILE=smallwins lambda-list",
+    "deploy":"AWS_PROFILE=smallwins lambda-deploy"
   }
 }
 ```
 
-You can deploy with `npm run deploy src/lambdas/signup brian` (and the lambda will be deployed to with the alias `brian`.
+- Create a new lambda `npm run create src/lambdas/forgot`
+- List all deployed lambdas `npm run list`
+- You can deploy with `npm run deploy src/lambdas/signup brian` (and the lambda will be deployed to with the alias `brian`)
