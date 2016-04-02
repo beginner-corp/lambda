@@ -214,7 +214,7 @@ And a `package.json` like this:
 }
 ```
 
-- `npm run create src/lambdas/forgot` creates a new lambda 
+- <kbd>npm run create src/lambdas/forgot</kbd> creates a new lambda 
 - `npm run list` lists all deployed lambdas 
 - `npm run deploy src/lambdas/signup brian` deploys the lambda with the alias `brian`
 - `npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'` to invoke a lambda
