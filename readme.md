@@ -2,14 +2,14 @@
 
 ---
 
-## @smallwins/lambda :raised_hands::seedling:λ :satellite::satellite::satellite: 
+## :raised_hands::seedling: @smallwins/lambda λ  
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
 - Event sources like DynamoDB triggers and SNS topics too
 - Helpful npm scripts `lambda-create`, `lambda-list`, `lambda-deploy` and `lambda-invoke`
 
-#### return json results :mailbox:
+#### :satellite::satellite::satellite: return json results :mailbox:
 
 Lets look at a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
 
