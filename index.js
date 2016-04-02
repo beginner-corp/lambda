@@ -70,19 +70,4 @@ lambda.sources = {
   }
 }
 
-lambda.scripts = {
-  env: function env(callback) {
-
-  },
-  init: function init(path, callback) {
-
-  },
-  deploy: function deploy() {
-
-  },
-  pkg: function package() {
-
-  }
-}
-
 module.exports = lambda
