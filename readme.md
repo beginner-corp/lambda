@@ -11,7 +11,7 @@
 
 ## return a result to api gateway
 
-Lets look at a vanilla AWS Lambda example. Here is a Lambda for performing a sum. given `event.query.x = 1` it will return `{count:2}`.
+Lets look at a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
 
 ```javascript
 exports.handler = function sum(event, callback) {
@@ -71,9 +71,10 @@ The `validate` library above takes care of builtin parameter validations. It can
 
 Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a Lambda that: 
 
-- Validate parameters
-- Check for an authorized account
-- And then either returns data safely (or calls back with errors)
+- Validates parameters
+- Checks for an authorized account
+- And then either returns data safely
+- If anything fails return JSON serialized `Error` array
 
 ```javascript
 var validate = require('@smallwins/validate')
@@ -85,13 +86,7 @@ function valid(event, callback) {
     'body.username': {required:true, type:String},
     'body.password': {required:true, type:String}
   }
-  var errors = validate(event, schema)
-  if (errors) {
-    callback(errors)
-  }
-  else {
-    callback(null, event)
-  }
+  validate(event, schema, callback)
 }
 
 function authorized(event, callback) {
@@ -115,7 +110,7 @@ function safe(event, callback) {
 exports.handler = lambda(valid, authorized, safe)
 ```
 
-In the example above our functions are executed in series. Errors will halt execution and return immediately so if we make it the last function we just send back the resulting account data. Clean!
+In the example above our functions are executed in series. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
 
 ## save a record from a dynamodb trigger    
 
@@ -124,18 +119,37 @@ AWS DynamoDB can invoke a Lambda function if anything happens to a table.
 ```javascript
 var lambda = require('@smallwins/lambda')
 
-exports.handler = lambda(function saveVersion(record, callback) {
+function save(record, callback) {
+  console.log('save a version ', record)
+}
 
-})
+exports.handler = lambda.sources.dynamo.save(save)
 ```
 
 ## app api
 
 - `lambda(...fns)`
+- `lambda.sources.dynamo.all(...fns)`
+- `lambda.sources.dynamo.save(...fns)`
+- `lambda.sources.dynamo.insert(...fns)`
+- `lambda.sources.dynamo.update(...fns)`
+- `lambda.sources.dynamo.destroy(...fns)`
+- `lambda.sources.sns(...fns)`
+
+A handler looks something like this
+
+```javascript    
+function handler(event, callback) {
+  // process event, use to pass data
+  callback(null, event)
+  // callback(Error('something went wrong') // pass one error
+  // callback([Error('missing email'), Error('missing password')]) // or array of errors
+}
+```
 
 ## scripting api
 
-`@smallwins/lambda` includes some helpful code perfect for npm scripts. If you have a project that looks like this:
+`@smallwins/lambda` includes some helpful automation code perfect for npm scripts. If you have a project that looks like this:
 
 ```
 project-of-lambdas/

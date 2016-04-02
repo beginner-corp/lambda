@@ -59,15 +59,6 @@ function lambda() {
   }
 }
 
-lambda.sources = {
-
-  dynamo: {
-
-  },
-
-  sns: {
-
-  }
-}
+lambda.sources = require('./src/sources')
 
 module.exports = lambda
