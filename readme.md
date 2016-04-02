@@ -2,14 +2,14 @@
 
 ---
 
-# λ @smallwins/lambda
+# @smallwins/lambda :satellite: λλ λ  λ  λ 
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
 - Event sources like DynamoDB triggers and SNS topics too
-- Helpful npm scripts `lambda-create`, `lambda-list` and `lambda-deploy`
+- Helpful npm scripts `lambda-create`, `lambda-list`, `lambda-deploy` and `lambda-invoke`
 
-## return a result to api gateway
+## return json results :mailbox:
 
 Lets look at a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
 
@@ -65,16 +65,16 @@ function sum(event, callback) {
 exports.handler = lambda(sum)
 ```
 
-The `validate` library above takes care of builtin parameter validations. It can also handle custom types. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. Finally we wrap our function using `lambda` which will return a function with an AWS Lambda friendly signature.
+`@smallwins/validate` takes care of parameter validations. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
 
-## easily chain dependant actions ala middleware
+## easily chain dependant actions ala middleware :loop:
 
 Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a Lambda that: 
 
 - Validates parameters
 - Checks for an authorized account
 - And then either returns data safely
-- If anything fails return JSON serialized `Error` array
+- Or if anything fails return JSON serialized `Error` array
 
 ```javascript
 var validate = require('@smallwins/validate')
@@ -92,9 +92,11 @@ function valid(event, callback) {
 function authorized(event, callback) {
   var loggedIn = event.body.username === 'sutro' && event.body.password === 'cat'
   if (!loggedIn) {
+    // err first
     callback(Error('not found'))
   }
   else {
+    // successful login
     event.account = {
       loggedIn: loggedIn,
       name: 'sutro furry pants'
@@ -110,9 +112,9 @@ function safe(event, callback) {
 exports.handler = lambda(valid, authorized, safe)
 ```
 
-In the example above our functions are executed in series. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
+In the example above our functions are executed in series passing event through each invocation. `valid` will pass event to `authorized` which in turn passes it to `save`. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
 
-## save a record from a dynamodb trigger    
+## save a record from a dynamodb trigger :floppy_disk:
 
 AWS DynamoDB can invoke a Lambda function if anything happens to a table. 
 
@@ -127,7 +129,7 @@ function save(record, callback) {
 exports.handler = lambda.sources.dynamo.save(save)
 ```
 
-## api
+## api :thought_balloon:
 
 - `lambda(...fns)`
 - `lambda.sources.dynamo.all(...fns)`
@@ -135,7 +137,6 @@ exports.handler = lambda.sources.dynamo.save(save)
 - `lambda.sources.dynamo.insert(...fns)`
 - `lambda.sources.dynamo.modify(...fns)`
 - `lambda.sources.dynamo.remove(...fns)`
-- `lambda.sources.sns(...fns)`
 
 A handler looks something like this
 
@@ -147,9 +148,9 @@ function handler(event, callback) {
 }
 ```
 
-### errors
+### errors :x:
 
-Always use `Error` type as the first parameter to callback: 
+Good error handling makes your programs far easier to maintain. (This is a good guide.)[https://www.joyent.com/developers/node/design/errors]. When using `@smallwins/lambda` always use `Error` type as the first parameter to callback: 
 
 ```javascript
 function fails(event, callback) {
@@ -157,7 +158,7 @@ function fails(event, callback) {
 }
 ```
 
-Or an array of `Error`s:
+Or an `Error` array:
 
 ```javascript
 function fails(event, callback) {
@@ -168,7 +169,7 @@ function fails(event, callback) {
 }
 ```
 
-`@smallwins/lambda` serializes error into slack-rpc style JSON making them easy to work from API Gateway:
+`@smallwins/lambda` serializes error into Slack RPC style JSON making them easy to work from API Gateway:
 
 ```javascript
 {
@@ -180,7 +181,7 @@ function fails(event, callback) {
 }
 ```
 
-## scripting api
+## scripting api :memo:
 
 `@smallwins/lambda` includes some helpful automation code perfect for npm scripts. If you have a project that looks like this:
 
