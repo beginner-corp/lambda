@@ -2,7 +2,7 @@
 
 ---
 
-## @smallwins/lambda :satellite: λλ λ  λ  λ 
+## @smallwins/lambda λ:satellite: 
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
