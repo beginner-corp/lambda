@@ -2,14 +2,14 @@
 
 ---
 
-#### @smallwins/lambda :satellite: λλ λ  λ  λ 
+## @smallwins/lambda :satellite: λλ λ  λ  λ 
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
 - Event sources like DynamoDB triggers and SNS topics too
 - Helpful npm scripts `lambda-create`, `lambda-list`, `lambda-deploy` and `lambda-invoke`
 
-### return json results :mailbox:
+#### return json results :mailbox:
 
 Lets look at a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
 
@@ -67,7 +67,7 @@ exports.handler = lambda(sum)
 
 `@smallwins/validate` takes care of parameter validations. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
 
-### easily chain dependant actions ala middleware :loop::loop::loop:
+#### easily chain dependant actions ala middleware :loop::loop::loop:
 
 Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a Lambda that: 
 
@@ -114,7 +114,7 @@ exports.handler = lambda(valid, authorized, safe)
 
 In the example above our functions are executed in series passing event through each invocation. `valid` will pass event to `authorized` which in turn passes it to `save`. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
 
-### save a record from a dynamodb trigger :point_right::floppy_disk:
+#### save a record from a dynamodb trigger :point_right::floppy_disk:
 
 AWS DynamoDB can invoke a Lambda function if anything happens to a table. 
 
