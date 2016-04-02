@@ -68,8 +68,16 @@ if (isUndefined(role)) {
 
 console.log(chalk.green('\n λ ') + chalk.underline.cyan(package.json.name) + chalk.grey(` (alias:${alias})`))
 
-var dirname = join(__dirname, '..', name)
-var zip = join( __dirname, '..',  name.replace('/', '') + '.zip')
+// helper to remove trailing slash
+function strip(str) {
+  if(str.substr(-1) === '/') {
+    return str.substr(0, str.length - 1)
+  }
+  return str
+}
+
+var dirname = join(process.cwd(), name)
+var zip = join(process.cwd(), strip(name) + '.zip')
 
 async.waterfall([
   function zipTmp(callback) {
