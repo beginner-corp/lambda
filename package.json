@@ -7,12 +7,14 @@
     "test": "tape test/**-test.js | tap-spec",
     "create": "./scripts/create.js",
     "list": "./scripts/list.js",
-    "deploy": "./scripts/deploy.js"
+    "deploy": "./scripts/deploy.js",
+    "invoke": "./scripts/invoke.js"
   },
   "bin": {
     "lambda-create": "./scripts/create.js",
     "lambda-list": "./scripts/list.js",
-    "lambda-deploy": "./scripts/deploy.js"
+    "lambda-deploy": "./scripts/deploy.js",
+    "lambda-invoke": "./scripts/invoke.js"
   },
   "keywords": [
     "aws",

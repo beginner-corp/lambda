@@ -208,10 +208,22 @@ And a `package.json` like this:
     "create":"AWS_PROFILE=smallwins lambda-create",
     "list":"AWS_PROFILE=smallwins lambda-list",
     "deploy":"AWS_PROFILE=smallwins lambda-deploy"
+    "invoke":"AWS_PROFILE=smallwins lambda-invoke"
   }
 }
 ```
 
-- Create a new lambda `npm run create src/lambdas/forgot`
-- List all deployed lambdas `npm run list`
-- You can deploy with `npm run deploy src/lambdas/signup brian` (and the lambda will be deployed to with the alias `brian`)
+- `npm run create src/lambdas/forgot` creates a new lambda 
+- `npm run list` lists all deployed lambdas 
+- `npm run deploy src/lambdas/signup brian` deploys the lambda with the alias `brian`
+- `npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'` to invoke a lambda
+
+The `./scripts/invoke.js` is also a module and useful for testing.
+
+```
+var invoke = require('@smallwins/lambda/scripts/invoke')
+invoke('path/to/lambda', alias, payload, (err, response)=> {
+  console.log(err, response)
+})
+```
+

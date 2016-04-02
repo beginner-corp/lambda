@@ -9,5 +9,4 @@ lambda.listFunctions({}, (err, fns)=> {
   names.forEach(name=> {
     console.log(chalk.green(' λ ') + chalk.yellow(name))
   })
-  console.log('\n')
 })

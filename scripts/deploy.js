@@ -54,8 +54,10 @@ if (isUndefined(actual)) {
 
 var config = package.json.lambda
 if (isUndefined(config)) {
-  console.error('Error: package.json missing lambda')
-  process.exit(1)
+  // try the default role (will fail b/c this isn't an arn)
+  package.json.lambda = {
+    role: "lambda_basic_execution"
+  }
 }
 
 var role = package.json.lambda.role

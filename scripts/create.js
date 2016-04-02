@@ -27,8 +27,8 @@ var package = {
       "test": "node test | tap-spec"
     },
     "dependencies": {
-      "@smallwins/lambda": "^2.0.0",
-      "@smallwins/validate": "^3.0.0"
+      "@smallwins/lambda": ">4.0.0",
+      "@smallwins/validate": ">3.0.0"
     },
     "devDependencies": {
       "tap-spec": "^4.1.1",
@@ -58,11 +58,11 @@ exports.handler = lambda(valid, fn)
 var test = {
   js: `
 var test = require('tape')
-var lambda = require('./')
+var fn = require('./')
 
 test('sanity', t=> {
   t.plan(1)
-  t.ok(lambda, 'lambda exists')
+  t.ok(fn, 'lambda function exists')
 })
     `
 }
