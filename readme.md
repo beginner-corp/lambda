@@ -39,9 +39,9 @@ exports.handler = function sum(event, context) {
 }
 ```
 
-A huge amount of vanilla Lambda code is working around quirky parameter validation. API Gateway gives you control over the parameters you can expect but this still means one or more of: headers, querystring paramters, form body, or url parameters. Event source style Lambdasare not much better because you get different payloads depending on the source. In the example above we are validating one query string parameter `x`. Imagine a big payload! 😮
+A huge amount of vanilla Lambda code is working around quirky parameter validation. API Gateway gives you control over the parameters you can expect but this still means one or more of: headers, querystring paramters, form body, or url parameters. Event source style Lambdasare not much better because you still get different payloads depending on the source. In the example above we are validating *one* query string parameter `x`. Imagine a big payload! 😮
 
-Builtin `Error` needs manual serialization (and you still lose the stack trace). The latter part of the code uses the funky AWS `context` object. 
+Worse still, writing a good program we want to use JavaScript's builtin `Error` but it still needs manual serialization (and you still lose the stack trace). The latter part of this vanilla code uses the funky AWS `context` object. 
 
 We can do better:
 
@@ -67,11 +67,11 @@ function sum(event, callback) {
 exports.handler = lambda(sum)
 ```
 
-`@smallwins/validate` cleans up parameter validation. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla Node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
+`@smallwins/validate` cleans up parameter validation. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a your node style function in `lambda` which returns your function with an AWS Lambda friendly signature.
 
 #### :loop::loop::loop: easily chain dependant actions ala middleware :loop::loop::loop:
 
-Building on this foundation we can compose multiple errbacks into a Lambda. Lets compose a Lambda that: 
+Building on this foundation we can compose multiple functions into a single Lambda. It is very common to want to run functions in series. Lets compose a Lambda that: 
 
 - Validates parameters
 - Checks for an authorized account
@@ -133,14 +133,14 @@ exports.handler = lambda.sources.dynamo.save(save)
 
 ## :love_letter: api :thought_balloon::sparkles:
 
-- `lambda(...fns)` create a lambda that returns a serialized json result `{ok:true|false}`
-- `lambda([fns], callback)` create a lambda and handle result with your own errback formatter
-- `lambda.local(fn, fakeEvent, (err, result)=>)` run a lamda locally offline by faking the event obj
-- `lambda.sources.dynamo.all(...fns)` 
-- `lambda.sources.dynamo.save(...fns)`
-- `lambda.sources.dynamo.insert(...fns)`
-- `lambda.sources.dynamo.modify(...fns)`
-- `lambda.sources.dynamo.remove(...fns)`
+- `lambda(...fns)` create a Lambda that returns a serialized json result `{ok:true|false}`
+- `lambda([fns], callback)` create a Lambda and handle result with your own errback formatter
+- `lambda.local(fn, fakeEvent, (err, result)=>)` run a Lambda locally offline by faking the event obj
+- `lambda.sources.dynamo.all(...fns)` run on INSERT, MODIFY and REMOVE
+- `lambda.sources.dynamo.save(...fns)` run on INSERT and MODIFY
+- `lambda.sources.dynamo.insert(...fns)` run on INSERT only
+- `lambda.sources.dynamo.modify(...fns)` run on MODIFY only
+- `lambda.sources.dynamo.remove(...fns)` run on REMOVE only
 
 A handler looks something like this
 
@@ -154,7 +154,7 @@ function handler(event, callback) {
 
 #### :heavy_exclamation_mark: regarding errors :x::interrobang:
 
-Good error handling makes your programs far easier to maintain. (This is a good guide.)[https://www.joyent.com/developers/node/design/errors]. When using `@smallwins/lambda` always use `Error` type as the first parameter to callback: 
+Good error handling makes programs easier to maintain. [This is a great guide digging in more.](https://www.joyent.com/developers/node/design/errors). When using `@smallwins/lambda` always use `Error` type as the first parameter to the callback: 
 
 ```javascript
 function fails(event, callback) {
@@ -236,3 +236,5 @@ invoke('path/to/lambda', alias, payload, (err, response)=> {
   console.log(err, response)
 })
 ```
+
+Of course you can also mock invoke a Lambda locally with `lambda.local`.
