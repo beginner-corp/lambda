@@ -214,6 +214,7 @@ And a `package.json` like this:
     "list":"AWS_PROFILE=smallwins lambda-list",
     "deploy":"AWS_PROFILE=smallwins lambda-deploy",
     "invoke":"AWS_PROFILE=smallwins lambda-invoke",
+    "local":"AWS_PROFILE=smallwins lambda-local",
     "deps":"AWS_PROFILE=smallwins lambda-deps"
   }
 }
@@ -222,8 +223,9 @@ And a `package.json` like this:
 - :point_right: <kbd>npm run create src/lambdas/forgot</kbd> creates a new lambda 
 - :point_right: <kbd>npm run list</kbd> lists all deployed lambdas 
 - :point_right: <kbd>npm run deploy src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
-- :point_right:<kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to invoke a lambda
-- :point_right:<kbd>npm run deps src/lambdas/*</kbd> for a report of all your lambda deps
+- :point_right: <kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to remote invoke a deployed lambda
+- :point_right: <kbd>npm run local src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to locally invoke a lambda
+- :point_right: <kbd>npm run deps src/lambdas/*</kbd> for a report of all your lambda deps
 
 The `./scripts/invoke.js` is also a module and can be useful for testing.
 
@@ -234,4 +236,3 @@ invoke('path/to/lambda', alias, payload, (err, response)=> {
   console.log(err, response)
 })
 ```
-

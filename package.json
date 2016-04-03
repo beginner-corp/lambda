@@ -9,6 +9,7 @@
     "list": "./scripts/list.js",
     "deploy": "./scripts/deploy.js",
     "invoke": "./scripts/invoke.js",
+    "local": "./scripts/local.js",
     "deps": "./scripts/deps.js"
   },
   "bin": {
@@ -16,6 +17,7 @@
     "lambda-list": "./scripts/list.js",
     "lambda-deploy": "./scripts/deploy.js",
     "lambda-invoke": "./scripts/invoke.js",
+    "lambda-local": "./scripts/local.js",
     "lambda-deps": "./scripts/deps.js"
   },
   "keywords": [
