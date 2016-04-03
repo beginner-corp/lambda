@@ -128,10 +128,12 @@ function save(record, callback) {
 exports.handler = lambda.sources.dynamo.save(save)
 ```
 
-#### :love_letter: api :thought_balloon: :sparkles:
+## :love_letter: api :thought_balloon::sparkles:
 
-- `lambda(...fns)`
-- `lambda.sources.dynamo.all(...fns)`
+- `lambda(...fns)` create a lambda that returns a serialized json result `{ok:true|false}`
+- `lambda([fns], callback)` create a lambda and handle result with your own errback formatter
+- `lambda.local(fn, fakeEvent, (err, result)=>)` run a lamda locally offline by faking the event obj
+- `lambda.sources.dynamo.all(...fns)` 
 - `lambda.sources.dynamo.save(...fns)`
 - `lambda.sources.dynamo.insert(...fns)`
 - `lambda.sources.dynamo.modify(...fns)`
