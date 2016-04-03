@@ -32,9 +32,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.2",
     "aws-sdk": "^2.2.47",
-    "bauer-zip": "^1.0.2",
     "chalk": "^1.1.3",
-    "easy-zip": "0.0.4",
     "lodash": "^4.7.0",
     "mkdirp": "^0.5.1",
     "path-exists": "^2.1.0",

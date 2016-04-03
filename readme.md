@@ -114,8 +114,7 @@ exports.handler = lambda(valid, authorized, safe)
 
 In the example above our functions are executed in series passing event through each invocation. `valid` will pass event to `authorized` which in turn passes it to `save`. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
 
-#### :point_right: save a record from a dynamodb trigger :floppy_disk:
-
+#### :floppy_disk: save a record from a dynamodb trigger :boom::gun:
 AWS DynamoDB can invoke a Lambda function if anything happens to a table. 
 
 ```javascript
@@ -208,8 +207,9 @@ And a `package.json` like this:
   "scripts": {
     "create":"AWS_PROFILE=smallwins lambda-create",
     "list":"AWS_PROFILE=smallwins lambda-list",
-    "deploy":"AWS_PROFILE=smallwins lambda-deploy"
-    "invoke":"AWS_PROFILE=smallwins lambda-invoke"
+    "deploy":"AWS_PROFILE=smallwins lambda-deploy",
+    "invoke":"AWS_PROFILE=smallwins lambda-invoke",
+    "deps":"AWS_PROFILE=smallwins lambda-deps"
   }
 }
 ```
@@ -218,6 +218,7 @@ And a `package.json` like this:
 - :point_right: <kbd>npm run list</kbd> lists all deployed lambdas 
 - :point_right: <kbd>npm run deploy src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
 - :point_right:<kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to invoke a lambda
+- :point_right:<kbd>npm run deps src/lambdas/*</kbd> for a report of all your lambda deps
 
 The `./scripts/invoke.js` is also a module and can be useful for testing.
 
