@@ -9,12 +9,12 @@
 - Event sources like DynamoDB triggers and SNS topics too
 - Helpful npm scripts `lambda-create`, `lambda-list`, `lambda-deploy` and `lambda-invoke`
 
-#### :satellite::satellite::satellite: return json results :mailbox:
+#### :satellite::satellite::satellite: λ returning json results :mailbox:
 
-Lets look at a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
+Here is a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
 
 ```javascript
-exports.handler = function sum(event, callback) {
+exports.handler = function sum(event, context) {
   var errors = []
   if (typeof event.query === 'undefined') {
     errors.push(ReferenceError('missing event.query'))
