@@ -8,13 +8,15 @@
     "create": "./scripts/create.js",
     "list": "./scripts/list.js",
     "deploy": "./scripts/deploy.js",
-    "invoke": "./scripts/invoke.js"
+    "invoke": "./scripts/invoke.js",
+    "deps": "./scripts/deps.js"
   },
   "bin": {
     "lambda-create": "./scripts/create.js",
     "lambda-list": "./scripts/list.js",
     "lambda-deploy": "./scripts/deploy.js",
-    "lambda-invoke": "./scripts/invoke.js"
+    "lambda-invoke": "./scripts/invoke.js",
+    "lambda-deps": "./scripts/deps.js"
   },
   "keywords": [
     "aws",

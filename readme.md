@@ -219,10 +219,11 @@ And a `package.json` like this:
 - :point_right: <kbd>npm run deploy src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
 - :point_right:<kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to invoke a lambda
 
-The `./scripts/invoke.js` is also a module and useful for testing.
+The `./scripts/invoke.js` is also a module and can be useful for testing.
 
-```
+```javscript
 var invoke = require('@smallwins/lambda/scripts/invoke')
+
 invoke('path/to/lambda', alias, payload, (err, response)=> {
   console.log(err, response)
 })
