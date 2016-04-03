@@ -11,7 +11,7 @@
 
 #### :satellite::satellite::satellite: λ returning json results :mailbox:
 
-Here is a vanilla AWS Lambda example. Here is a Lambda for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
+Here is a vanilla AWS Lambda example for performing a sum. Given `event.query.x = 1` it will return `{count:2}`.
 
 ```javascript
 exports.handler = function sum(event, context) {
@@ -39,7 +39,7 @@ exports.handler = function sum(event, context) {
 }
 ```
 
-A huge amount of this code is working around quirky parameter validations. Builtin `Error` needs manual serialization (and you still lose the stack trace). The latter part of the code uses the funky AWS `context` object. 
+A huge amount of this code is working around quirky parameter validation. Builtin `Error` needs manual serialization (and you still lose the stack trace). The latter part of the code uses the funky AWS `context` object. 
 
 We can do better:
 
@@ -65,7 +65,7 @@ function sum(event, callback) {
 exports.handler = lambda(sum)
 ```
 
-`@smallwins/validate` takes care of parameter validations. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
+`@smallwins/validate` takes care of parameter validation. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla Node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
 
 #### :loop::loop::loop: easily chain dependant actions ala middleware :loop::loop::loop:
 
@@ -73,7 +73,7 @@ Building on this foundation we can compose multiple errbacks into a Lambda. Lets
 
 - Validates parameters
 - Checks for an authorized account
-- And then either returns data safely
+- And then returns data safely
 - Or if anything fails return JSON serialized `Error` array
 
 ```javascript
