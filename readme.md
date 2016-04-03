@@ -39,7 +39,9 @@ exports.handler = function sum(event, context) {
 }
 ```
 
-A huge amount of this code is working around quirky parameter validation. Builtin `Error` needs manual serialization (and you still lose the stack trace). The latter part of the code uses the funky AWS `context` object. 
+A huge amount of vanilla Lambda code is working around quirky parameter validation. API Gateway gives you control over the parameters you can expect but this still means one or more of: headers, querystring paramters, form body, or url parameters. Event source style Lambdasare not much better because you get different payloads depending on the source. In the example above we are validating one query string parameter `x`. Imagine a big payload! 😮
+
+Builtin `Error` needs manual serialization (and you still lose the stack trace). The latter part of the code uses the funky AWS `context` object. 
 
 We can do better:
 
@@ -65,7 +67,7 @@ function sum(event, callback) {
 exports.handler = lambda(sum)
 ```
 
-`@smallwins/validate` takes care of parameter validation. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla Node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
+`@smallwins/validate` cleans up parameter validation. The callback style above enjoys symmetry with the rest of Node and will automatically serialize `Error`s into JSON friendly objects including any stack trace. All you need to do is wrap a vanilla Node errback function in `lambda` which returns your function with an AWS Lambda friendly signature.
 
 #### :loop::loop::loop: easily chain dependant actions ala middleware :loop::loop::loop:
 
@@ -115,7 +117,8 @@ exports.handler = lambda(valid, authorized, safe)
 In the example above our functions are executed in series passing event through each invocation. `valid` will pass event to `authorized` which in turn passes it to `save`. Any `Error` returns immediately so if we make it the last function we just send back the resulting account data. Clean!
 
 #### :floppy_disk: save a record from a dynamodb trigger :boom::gun:
-AWS DynamoDB can invoke a Lambda function if anything happens to a table. 
+
+AWS DynamoDB triggers invoke a Lambda function if anything happens to a table. The payload is usually a big array of records. `@smallwins/lambda` allows you to focus on processing a single record but executes the function in parallel on all the results in the Dynamo invocation. For convenience the same middleware chaining is supported.
 
 ```javascript
 var lambda = require('@smallwins/lambda')
