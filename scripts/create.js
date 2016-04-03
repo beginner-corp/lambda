@@ -58,7 +58,7 @@ exports.handler = lambda(valid, fn)
 var test = {
   js: `
 var test = require('tape')
-var fn = require('./')
+var fn = require('./').handler
 
 test('sanity', t=> {
   t.plan(1)
