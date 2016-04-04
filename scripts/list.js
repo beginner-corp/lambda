@@ -4,7 +4,10 @@ var aws = require('aws-sdk')
 var region = process.env.AWS_REGION || 'us-east-1'
 var lambda = new aws.Lambda({region:region})
 var chalk = require('chalk')
-var startsWith = require('lodash').startsWith
+var lodash = require('lodash')
+var startsWith = lodash.startsWith
+var padEnd = lodash.padEnd
+var padStart = lodash.padStart
 var filtering = process.argv[2] || ''
 
 function info(txt) {
@@ -28,11 +31,17 @@ function aliases(names, callback) {
         FunctionName: name,
       }
       lambda.listAliases(params, (err, na)=> {
-        var readable = na.Aliases.map(a=> `${a.Name}@${a.FunctionVersion}`)
+        var readable = na.Aliases.map(a=> {
+          return {
+            name:a.Name,
+            version:a.FunctionVersion
+          }
+        })
         callback(err, {name:name, aliases:readable})
       })
     }
   })
+  /*
   function done(err, result) {
     if (err) {
       callback(err)
@@ -40,16 +49,20 @@ function aliases(names, callback) {
     else {
       callback(null, result)
     }
-  }
-  async.parallel(handlers, done)
+  }*/
+  async.parallel(handlers, callback)
 }
 
 async.waterfall([list, aliases], function complete(err, result) {
   result.forEach(row=> {
-    // var alias = row.aliases.join(' ')
     info(row.name)
     row.aliases.forEach(a=> {
-      console.log(chalk.green(' λ ') + chalk.grey(' - ' + a))
+      var latest = a.version === '$LATEST'
+      var ver = padStart(a.version, 10, '.')
+      var ca = chalk.green(' λ ')
+      var cb = chalk.grey(' - ' + padEnd(a.name, 10, '.'))
+      var cc = latest? chalk.dim.grey(ver) : chalk.dim.yellow(ver)
+      console.log(ca + cb + cc)
     })
     console.log(chalk.green(' λ '))
   })
