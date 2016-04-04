@@ -173,7 +173,7 @@ function fails(event, callback) {
 }
 ```
 
-`@smallwins/lambda` serializes error into Slack RPC style JSON making them easy to work from API Gateway:
+`@smallwins/lambda` serializes errors into Slack RPC style JSON. Easier to work from API Gateway:
 
 ```javascript
 {
