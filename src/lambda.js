@@ -60,7 +60,7 @@ function lambda() {
           }
         }
         else {
-          if (typeof result ==== 'undefined') result = {}
+          if (typeof result === 'undefined') result = {}
           result.ok = true
         }
         // deliberate use context.succeed;
