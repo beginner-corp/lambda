@@ -58,7 +58,7 @@ async.waterfall([list, aliases], function complete(err, result) {
     info(row.name)
     row.aliases.forEach(a=> {
       var latest = a.version === '$LATEST'
-      var ver = padStart(a.version, 10, '.')
+      var ver = padStart(a.version, 25, '.')
       var ca = chalk.green(' λ ')
       var cb = chalk.grey(' - ' + padEnd(a.name, 10, '.'))
       var cc = latest? chalk.dim.grey(ver) : chalk.dim.yellow(ver)

@@ -7,6 +7,7 @@ var dirs = glob(path)
 var chalk = require('chalk')
 var lodash = require('lodash')
 
+console.log(chalk.green(' λ ') + chalk.grey.dim('analyzing local dependencies'))
 dirs.forEach(dir=> {
   var pkg = join(dir, 'package.json')
   var json = require(pkg)
