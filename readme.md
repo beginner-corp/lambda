@@ -197,7 +197,7 @@ project-of-lambdas/
  |     |-signup/
  |     |  |-index.js
  |     |  |-test.js
- |     |  '-package.json :point_left: name property should equal the deployed lambda name
+ |     |  '-package.json <--- name property should equal the deployed lambda name
  |     |-login/
  |     '-logout/
  '-package.json
@@ -223,13 +223,13 @@ And a `package.json` like this:
 
 Note: these scripts assume each lambda has it's own nested `package.json` file with a `name` property that matches the lambda name.
 
-- :point_right: <kbd>npm run create src/lambdas/forgot</kbd> creates a new lambda 
-- :point_right: <kbd>npm run list</kbd> lists all deployed lambdas 
-- :point_right: <kbd>npm run deploy src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
-- :point_right: <kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to remote invoke a deployed lambda
-- :point_right: <kbd>npm run local src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to locally invoke a lambda
-- :point_right: <kbd>npm run deps src/lambdas/*</kbd> for a report of all your lambda deps
-- :point_right: <kbd>npm run log src/lambdas/logout</kbd> to view the cloudwatch invocation logs for that lambda (remote run `console.log` statements show up here)
+- :point_right: <kbd>npm run <b>create</b> src/lambdas/forgot</kbd> creates a new lambda 
+- :point_right: <kbd>npm run <b>list</b></kbd> lists all deployed lambdas 
+- :point_right: <kbd>npm run <b>deploy</b> src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
+- :point_right: <kbd>npm run <b>invoke</b> src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to remote invoke a deployed lambda
+- :point_right: <kbd>npm run <b>local</b> src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to locally invoke a lambda
+- :point_right: <kbd>npm run <b>deps</b> src/lambdas/*</kbd> for a report of all your lambda deps
+- :point_right: <kbd>npm run <b>log</b> src/lambdas/logout</kbd> to view the cloudwatch invocation logs for that lambda (remote run `console.log` statements show up here)
 
 The `./scripts/invoke.js` is also a module and can be useful for testing.
 
