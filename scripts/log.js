@@ -63,7 +63,7 @@ stream(name, (err, result)=> {
 
       // ugh
       var strftime = require('strftime')
-      var left = chalk.grey.dim(strftime('%b%e,%l:%M:%S ', new Date(e.timestamp)))
+      var left = chalk.dim.green(' λ ') + chalk.grey.dim(strftime('%b%e,%l:%M:%S ', new Date(e.timestamp)))
       var right = chalk.green(e.message)
       var isStart = /START RequestId:/.test(e.message)
       var isEnd = /END RequestId:/.test(e.message)
