@@ -197,7 +197,7 @@ project-of-lambdas/
  |     |-signup/
  |     |  |-index.js
  |     |  |-test.js
- |     |  '-package.json
+ |     |  '-package.json :point_left: name property should equal the deployed lambda name
  |     |-login/
  |     '-logout/
  '-package.json
@@ -233,7 +233,7 @@ Note: these scripts assume each lambda has it's own nested `package.json` file w
 
 The `./scripts/invoke.js` is also a module and can be useful for testing.
 
-```javscript
+```javascript
 var invoke = require('@smallwins/lambda/scripts/invoke')
 
 invoke('path/to/lambda', alias, payload, (err, response)=> {
