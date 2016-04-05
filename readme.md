@@ -2,7 +2,7 @@
 
 ---
 
-## :raised_hands::seedling: @smallwins/lambda λ  
+## @smallwins/lambda :seedling::raised_hands:λ  
 
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
@@ -221,21 +221,46 @@ And a `package.json` like this:
 }
 ```
 
-### :fast_forward: npm run scripts :running::dash:
+You get:
 
-- :point_right: <kbd>npm run <b>create</b> src/lambdas/forgot</kbd> creates a new lambda 
-- :point_right: <kbd>npm run <b>list</b></kbd> lists all deployed lambdas 
+#### :fast_forward: npm run scripts :running::dash:
+
+- :point_right: <kbd>npm run <b>create</b> src/lambdas/forgot</kbd> creates a new lambda named `forgot` at `src/lambdas/forgot` 
+- :point_right: <kbd>npm run <b>list</b></kbd> lists all deployed lambdas and all their alias@versions
 - :point_right: <kbd>npm run <b>deploy</b> src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
 - :point_right: <kbd>npm run <b>invoke</b> src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to remote invoke a deployed lambda
 - :point_right: <kbd>npm run <b>local</b> src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to locally invoke a lambda
 - :point_right: <kbd>npm run <b>deps</b> src/lambdas/*</kbd> for a report of all your lambda deps
-- :point_right: <kbd>npm run <b>log</b> src/lambdas/logout</kbd> to view the cloudwatch invocation logs for that lambda (remote run `console.log` statements show up here)
+- :point_right: <kbd>npm run <b>log</b> src/lambdas/logout</kbd> to view the cloudwatch invocation logs for that lambda (remote `console.log` statements show up here)
 
-Note: these scripts assume each lambda has it's own nested `package.json` file with a `name` property that matches the lambda name.
+_Note: these scripts assume each lambda has it's own nested `package.json` file with a `name` property that matches the lambda name._
 
-### testing 
+### testing :white_check_mark: 
 
-The `./scripts/invoke.js` is also a module and can be useful for testing.
+You can invoke a Lambda locally with a mock payload using `lambda.local`. Say you have this lambda function:
+
+```javascript
+// always-ok.js
+var lambda = require('@smallwins/lambda')
+
+function fakeFn(event, callback) {
+  callback(null, Object.assign({hello:'world'}, event))
+}
+
+exports.handler = lambda(fakeFn)
+```
+
+You can imagine the test:
+
+```
+// always-test.js
+var fn = require('./always-ok').handler
+
+lambda.local(fn, {fake:'payload'}, console.log)
+// logs {hello:'world', fake:'payload', ok:true}
+```
+
+`./scripts/invoke.js` is also a module and can be useful for testing. It will remotely invoke your lambda.
 
 ```javascript
 var invoke = require('@smallwins/lambda/scripts/invoke')
@@ -245,4 +270,3 @@ invoke('path/to/lambda', alias, payload, (err, response)=> {
 })
 ```
 
-Of course you can also mock invoke a Lambda locally with `lambda.local`.
