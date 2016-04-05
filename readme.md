@@ -185,7 +185,7 @@ function fails(event, callback) {
 }
 ```
 
-#### <kbd>#! scripting api</kbd> :memo:
+#### <kbd>#! automatations</kbd> :memo:
 
 `@smallwins/lambda` includes some helpful automation code perfect for npm scripts. If you have a project that looks like this:
 
@@ -221,7 +221,7 @@ And a `package.json` like this:
 }
 ```
 
-Note: these scripts assume each lambda has it's own nested `package.json` file with a `name` property that matches the lambda name.
+### :fast_forward: npm run scripts :running::dash:
 
 - :point_right: <kbd>npm run <b>create</b> src/lambdas/forgot</kbd> creates a new lambda 
 - :point_right: <kbd>npm run <b>list</b></kbd> lists all deployed lambdas 
@@ -230,6 +230,10 @@ Note: these scripts assume each lambda has it's own nested `package.json` file w
 - :point_right: <kbd>npm run <b>local</b> src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to locally invoke a lambda
 - :point_right: <kbd>npm run <b>deps</b> src/lambdas/*</kbd> for a report of all your lambda deps
 - :point_right: <kbd>npm run <b>log</b> src/lambdas/logout</kbd> to view the cloudwatch invocation logs for that lambda (remote run `console.log` statements show up here)
+
+Note: these scripts assume each lambda has it's own nested `package.json` file with a `name` property that matches the lambda name.
+
+### testing 
 
 The `./scripts/invoke.js` is also a module and can be useful for testing.
 
