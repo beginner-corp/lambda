@@ -225,7 +225,7 @@ You get:
 
 #### :fast_forward: npm run scripts :running::dash:
 
-This is :key:! Staying in the flow with your terminal by reducing furtive visits hunt for information in the AWS Console. :shipit::chart_with_upwards_trend:
+This is :key:! Staying in the flow with your terminal by reducing hunts for information in the AWS Console. :shipit::chart_with_upwards_trend:
 
 - :point_right: <kbd>npm run <b>create</b> src/lambdas/forgot</kbd> creates a new lambda named `forgot` at `src/lambdas/forgot` 
 - :point_right: <kbd>npm run <b>list</b></kbd> lists all deployed lambdas and all their alias@versions
