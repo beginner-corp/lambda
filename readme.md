@@ -39,9 +39,9 @@ exports.handler = function sum(event, context) {
 }
 ```
 
-A huge amount of vanilla Lambda code is working around quirky parameter validation. API Gateway gives you control over the parameters you can expect but this still means one or more of: headers, querystring paramters, form body, or url parameters. Event source style Lambdasare not much better because you still get different payloads depending on the source. In the example above we are validating *one* query string parameter `x`. Imagine a big payload! 😮
+A huge amount of vanilla AWS Lambda code is working around quirky parameter validation. API Gateway gives you control over the parameters you can expect but this still means one or more of: headers, querystring, form body, or url parameters. Event source style lambdas are not much better because you can often still get differing payloads from different origin sources. In the example above we are validating *one* querystring parameter `x`. Imagine a big payload! 😮
 
-Worse still, writing a good program we want to use JavaScript's builtin `Error` but it still needs manual serialization (and you still lose the stack trace). The latter part of this vanilla code uses the funky AWS `context` object. 
+Worse still, writing a good program we want to use JavaScript's builtin `Error` but it still needs manual serialization (and you still lose the stack trace). The latter part of this vanilla code uses the funky AWS `context` object.
 
 We can do better:
 
@@ -142,7 +142,7 @@ exports.handler = lambda.sources.dynamo.save(save)
 - `lambda.sources.dynamo.modify(...fns)` run on MODIFY only
 - `lambda.sources.dynamo.remove(...fns)` run on REMOVE only
 
-A handler looks something like this
+A handler looks something like this:
 
 ```javascript    
 function handler(event, callback) {
@@ -154,7 +154,7 @@ function handler(event, callback) {
 
 #### :heavy_exclamation_mark: regarding errors :x::interrobang:
 
-Good error handling makes programs easier to maintain. [This is a great guide digging in more.](https://www.joyent.com/developers/node/design/errors). When using `@smallwins/lambda` always use `Error` type as the first parameter to the callback: 
+Good error handling makes programs easier to maintain. [This is a great guide digging in more.](https://www.joyent.com/developers/node/design/errors) When using `@smallwins/lambda` always use `Error` type as the first parameter to the callback: 
 
 ```javascript
 function fails(event, callback) {
@@ -173,7 +173,7 @@ function fails(event, callback) {
 }
 ```
 
-`@smallwins/lambda` serializes errors into Slack RPC style JSON. Easier to work from API Gateway:
+`@smallwins/lambda` serializes errors into Slack RPC style JSON. Easier to work with from API Gateway:
 
 ```javascript
 {
@@ -225,6 +225,8 @@ You get:
 
 #### :fast_forward: npm run scripts :running::dash:
 
+This is :key:! Staying in the flow with your terminal by reducing furtive visits hunt for information in the AWS Console. :shipit::chart_with_upwards_trend:
+
 - :point_right: <kbd>npm run <b>create</b> src/lambdas/forgot</kbd> creates a new lambda named `forgot` at `src/lambdas/forgot` 
 - :point_right: <kbd>npm run <b>list</b></kbd> lists all deployed lambdas and all their alias@versions
 - :point_right: <kbd>npm run <b>deploy</b> src/lambdas/signup brian</kbd> deploys the lambda with the alias `brian`
@@ -252,7 +254,7 @@ exports.handler = lambda(fakeFn)
 
 You can imagine the test:
 
-```
+```javascript
 // always-test.js
 var fn = require('./always-ok').handler
 
