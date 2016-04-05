@@ -10,7 +10,8 @@
     "deploy": "./scripts/deploy.js",
     "invoke": "./scripts/invoke.js",
     "local": "./scripts/local.js",
-    "deps": "./scripts/deps.js"
+    "deps": "./scripts/deps.js",
+    "log": "./scripts/log.js"
   },
   "bin": {
     "lambda-create": "./scripts/create.js",
@@ -18,7 +19,8 @@
     "lambda-deploy": "./scripts/deploy.js",
     "lambda-invoke": "./scripts/invoke.js",
     "lambda-local": "./scripts/local.js",
-    "lambda-deps": "./scripts/deps.js"
+    "lambda-deps": "./scripts/deps.js",
+    "lambda-log": "./scripts/log.js"
   },
   "keywords": [
     "aws",

@@ -5,6 +5,7 @@ var chalk = require('chalk')
 var aws = require('aws-sdk')
 var region = process.env.AWS_REGION || 'us-east-1'
 var cw = new aws.CloudWatchLogs({region:region})
+var exists = require('path-exists').sync
 
 function stream(name, callback) {
   cw.describeLogStreams({
@@ -12,13 +13,33 @@ function stream(name, callback) {
   }, callback)
 }
 
-var usr = process.argv[2]
-if (!usr) {
-  throw Error('missing lambda name')
+var name = process.argv[2]
+if (lodash.isUndefined(name)) {
+  console.error('Error: missing path to the lambda')
+  process.exit(1)
+}
+
+var pkg = name + '/package.json'
+if (!exists(pkg)) {
+  console.error('Error: ' + pkg + ' does not exist')
+  console.error('\n')
+  console.error('Create a lambda with lambda-create in an npm script.')
+  console.error('\n')
+  process.exit(1)
+}
+
+var package = {
+  json: require(process.cwd() + '/' + pkg)
+}
+
+var actual = package.json.name
+if (lodash.isUndefined(actual)) {
+  console.error('Error: package.json missing name')
+  process.exit(1)
 }
 
 // setup the name
-var name = '/aws/lambda/' + usr
+name = '/aws/lambda/' + package.json.name 
 
 // get the stream
 stream(name, (err, result)=> {

@@ -7,7 +7,7 @@
 - Author your AWS Lambda functions as pure node style callbacks (aka errbacks)
 - Familiar middleware pattern for composition
 - Event sources like DynamoDB triggers and SNS topics too
-- Helpful npm scripts `lambda-create`, `lambda-list`, `lambda-deploy` and `lambda-invoke`
+- Helpful npm scripts `lambda-create`, `lambda-list`, `lambda-deploy` and `lambda-invoke` (and more)
 
 #### :satellite::satellite::satellite: λ returning json results :mailbox:
 
@@ -215,10 +215,13 @@ And a `package.json` like this:
     "deploy":"AWS_PROFILE=smallwins lambda-deploy",
     "invoke":"AWS_PROFILE=smallwins lambda-invoke",
     "local":"AWS_PROFILE=smallwins lambda-local",
-    "deps":"AWS_PROFILE=smallwins lambda-deps"
+    "deps":"AWS_PROFILE=smallwins lambda-deps",
+    "log":"AWS_PROFILE=smallwins lambda-log"
   }
 }
 ```
+
+Note: these scripts assume each lambda has it's own nested `package.json` file with a `name` property that matches the lambda name.
 
 - :point_right: <kbd>npm run create src/lambdas/forgot</kbd> creates a new lambda 
 - :point_right: <kbd>npm run list</kbd> lists all deployed lambdas 
@@ -226,6 +229,7 @@ And a `package.json` like this:
 - :point_right: <kbd>npm run invoke src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to remote invoke a deployed lambda
 - :point_right: <kbd>npm run local src/lambdas/login brian '{"email":"b@brian.io", "pswd":"..."}'</kbd> to locally invoke a lambda
 - :point_right: <kbd>npm run deps src/lambdas/*</kbd> for a report of all your lambda deps
+- :point_right: <kbd>npm run log src/lambdas/logout</kbd> to view the cloudwatch invocation logs for that lambda (remote run `console.log` statements show up here)
 
 The `./scripts/invoke.js` is also a module and can be useful for testing.
 
