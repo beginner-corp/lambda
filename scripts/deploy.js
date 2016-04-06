@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var aws = require('aws-sdk')
 var async = require('async')
-var region = process.argv[4] || 'us-east-1'
+var region = process.env.AWS_REGION || 'us-east-1'
 var lambda = new aws.Lambda({region:region})
 var chalk = require('chalk')
 var isUndefined = require('lodash').isUndefined
@@ -10,9 +10,9 @@ var read = require('fs').readFileSync
 var rimraf = require('rimraf').sync
 var exec = require('child_process').exec
 var join = require('path').join
-// 
+//
 // usage
-// 
+//
 //   npm run deploy path/to/function alias
 //
 // example usage:
@@ -101,7 +101,7 @@ async.waterfall([
         var notfound = names.indexOf(actual) === -1
         console.log(chalk.green(' + ') + chalk.dim('checking'))
         if (notfound) {
-          callback(null, false)  
+          callback(null, false)
         }
         else {
           callback(null, true)
@@ -121,7 +121,7 @@ async.waterfall([
         Code: {
           ZipFile: zipfile
         },
-        FunctionName: package.json.name, 
+        FunctionName: package.json.name,
         Handler: 'index.handler',
         Role: package.json.lambda.role,
         Runtime: 'nodejs',
@@ -144,7 +144,7 @@ async.waterfall([
     console.log(chalk.green(' + ') + chalk.dim('update code'))
     var zipfile = read(zip)
     var params = {
-      FunctionName: package.json.name, 
+      FunctionName: package.json.name,
       Publish: true,
       ZipFile: zipfile
     }
@@ -156,12 +156,12 @@ async.waterfall([
       else {
         callback(null, data.Version)
       }
-    }) 
+    })
   },
   function createAlias(version, callback) {
     var params = {
-      FunctionName: package.json.name, 
-      FunctionVersion: version, 
+      FunctionName: package.json.name,
+      FunctionVersion: version,
       Name: alias
     }
     lambda.createAlias(params, function(err, data) {
@@ -197,7 +197,7 @@ async.waterfall([
         callback()
       }
     })
-  }, 
+  },
   function cleanupZip(callback) {
     rimraf(zip)
     callback()
