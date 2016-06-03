@@ -17,6 +17,9 @@ function info(txt) {
 function list(callback) {
   lambda.listFunctions({}, (err, fns)=> {
     console.log(chalk.green(' λ ') + chalk.grey.dim('listing deployed lambdas'))
+    if (err) {
+      return callback(err);
+    }
     var name = f=> f.FunctionName
     var start = name=> startsWith(name, filtering)
     var names = fns.Functions.map(name).filter(start).sort()
