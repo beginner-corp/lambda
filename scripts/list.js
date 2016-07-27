@@ -17,6 +17,9 @@ function info(txt) {
 function list(callback) {
   lambda.listFunctions({}, (err, fns)=> {
     console.log(chalk.green(' λ ') + chalk.grey.dim('listing deployed lambdas'))
+    if (err) {
+      return callback(err)
+    }
     var name = f=> f.FunctionName
     var start = name=> startsWith(name, filtering)
     var names = fns.Functions.map(name).filter(start).sort()
@@ -54,6 +57,11 @@ function aliases(names, callback) {
 }
 
 async.waterfall([list, aliases], function complete(err, result) {
+  if (err) {
+    console.log(chalk.red(' λ ' + err.message))
+    return
+  }
+
   result.forEach(row=> {
     info(row.name)
     row.aliases.forEach(a=> {
