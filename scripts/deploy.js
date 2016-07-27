@@ -124,7 +124,7 @@ async.waterfall([
         FunctionName: package.json.name,
         Handler: 'index.handler',
         Role: package.json.lambda.role,
-        Runtime: 'nodejs',
+        Runtime: package.json.lambda.runtime || 'nodejs4.3',
         Publish: true,
         Timeout: 3
       }
