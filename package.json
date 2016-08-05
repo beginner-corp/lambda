@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "async": "^2.0.0-rc.2",
+    "aws-dynamodb-lambda-trigger": "^4.2.0",
     "aws-sdk": "^2.2.47",
     "chalk": "^1.1.3",
     "glob": "^7.0.5",

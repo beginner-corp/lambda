@@ -128,7 +128,7 @@ function save(record, callback) {
   callback(null, record)
 }
 
-exports.handler = lambda.sources.dynamo.save(save)
+exports.handler = lambda.triggers.dynamo.save(save)
 ```
 
 ## :love_letter: api :thought_balloon::sparkles:
@@ -136,11 +136,12 @@ exports.handler = lambda.sources.dynamo.save(save)
 - `lambda(...fns)` create a Lambda that returns a serialized json result `{ok:true|false}`
 - `lambda([fns], callback)` create a Lambda and handle result with your own errback formatter
 - `lambda.local(fn, fakeEvent, (err, result)=>)` run a Lambda locally offline by faking the event obj
-- `lambda.sources.dynamo.all(...fns)` run on INSERT, MODIFY and REMOVE
-- `lambda.sources.dynamo.save(...fns)` run on INSERT and MODIFY
-- `lambda.sources.dynamo.insert(...fns)` run on INSERT only
-- `lambda.sources.dynamo.modify(...fns)` run on MODIFY only
-- `lambda.sources.dynamo.remove(...fns)` run on REMOVE only
+- `lambda.triggers.dynamo.insert(fn)` run on INSERT only
+- `lambda.triggers.dynamo.modify(fn)` run on MODIFY only
+- `lambda.triggers.dynamo.remove(fn)` run on REMOVE only
+- `lambda.triggers.dynamo.all(fn)` run on INSERT, MODIFY and REMOVE
+- `lambda.triggers.dynamo.save(fn)` run on INSERT and MODIFY
+- `lambda.triggers.dynamo.change(fn)` run on INSERT and REMOVE
 
 A handler looks something like this:
 

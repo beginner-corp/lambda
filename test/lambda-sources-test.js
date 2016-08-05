@@ -7,11 +7,11 @@ function handler(event, callback) {
 }
 
 // get an instance of the lambda
-var insert = lambda.sources.dynamo.insert(handler)
-var modify = lambda.sources.dynamo.modify(handler)
-var remove = lambda.sources.dynamo.remove(handler)
-var all = lambda.sources.dynamo.all(handler)
-var save = lambda.sources.dynamo.save(handler)
+var insert = lambda.triggers.dynamo.insert(handler)
+var modify = lambda.triggers.dynamo.modify(handler)
+var remove = lambda.triggers.dynamo.remove(handler)
+var all = lambda.triggers.dynamo.all(handler)
+var save = lambda.triggers.dynamo.save(handler)
 
 test('insert trigger', t=> {
   t.plan(1)
@@ -106,7 +106,7 @@ test('fail trigger', t=> {
     }
   }
   // invoke the lambda
-  var handler = lambda.sources.dynamo.modify(function(event, callback) {
+  var handler = lambda.triggers.dynamo.modify(function(event, callback) {
     callback(Error('test err'))
   })
   handler(event, context)
