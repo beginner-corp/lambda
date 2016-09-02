@@ -1,5 +1,6 @@
 var aws = require('aws-sdk')
-var lambda = new aws.Lambda
+var region = process.env.AWS_REGION || 'us-east-1'
+var lambda = new aws.Lambda({region:region})
 
 function list(state, callback) {
   
