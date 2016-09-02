@@ -10,6 +10,7 @@ var read = require('fs').readFileSync
 var rimraf = require('rimraf').sync
 var exec = require('child_process').exec
 var join = require('path').join
+var list = require('../src/list-functions')
 //
 // usage
 //
@@ -92,12 +93,12 @@ async.waterfall([
     })
   },
   function lambdaExists(callback) {
-    lambda.listFunctions({}, (err, fns)=> {
+    list({}, (err, fns)=> {
       if (err) {
         callback(Error('unable to list lambdas'))
       }
       else {
-        var names = fns.Functions.map(f=> f.FunctionName).sort()
+        var names = fns.map(f=> f.FunctionName).sort()
         var notfound = names.indexOf(actual) === -1
         console.log(chalk.green(' + ') + chalk.dim('checking'))
         if (notfound) {

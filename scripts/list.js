@@ -9,20 +9,21 @@ var startsWith = lodash.startsWith
 var padEnd = lodash.padEnd
 var padStart = lodash.padStart
 var filtering = process.argv[2] || ''
+var listFunctions = require('../src/list-functions')
 
 function info(txt) {
   console.log(chalk.green(' λ ') + chalk.cyan.underline.dim(txt))
 }
 
 function list(callback) {
-  lambda.listFunctions({}, (err, fns)=> {
+  listFunctions({}, (err, fns)=> {
     console.log(chalk.green(' λ ') + chalk.grey.dim('listing deployed lambdas'))
     if (err) {
       return callback(err)
     }
     var name = f=> f.FunctionName
     var start = name=> startsWith(name, filtering)
-    var names = fns.Functions.map(name).filter(start).sort()
+    var names = fns.map(name).filter(start).sort()
     callback(err, names)
   })
 }
