@@ -27,8 +27,8 @@ var package = {
       "test": "node test | tap-spec"
     },
     "dependencies": {
-      "@smallwins/lambda": ">4.0.0",
-      "@smallwins/validate": ">3.0.0"
+      "@smallwins/lambda": ">5.0.0",
+      "@smallwins/validate": ">4.0.0"
     },
     "devDependencies": {
       "tap-spec": "^4.1.1",
