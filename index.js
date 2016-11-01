@@ -1,7 +1,8 @@
-var lambda = require('./src/lambda')
-var dynamo = require('aws-dynamodb-lambda-trigger/lambda')
-var sns = require('./src/sns')
+var lambda = require('./_lambda')
+var dynamo = require('./_dynamo')
+var local = require('./_local') 
 
-lambda.triggers = {dynamo:dynamo, sns:sns}
+lambda.local = local
+lambda.triggers = {dynamo}
 
 module.exports = lambda

@@ -1,4 +1,4 @@
-var isArray = require('lodash').isArray
+var isArray = Array.isArray
 var lambda = require('../')
 var test = require('tape')
 

@@ -1,0 +1,44 @@
+{
+  "eventID": "0123987423r282342lkjfwldkfjsdf24",
+  "eventName": "MODIFY",
+  "eventVersion": "1.1",
+  "eventSource": "aws:dynamodb",
+  "awsRegion": "us-east-1",
+  "dynamodb": {
+    "ApproximateCreationDateTime": 1469066940,
+    "Keys": {
+      "project-id": {
+        "S": "7f84d97a-3842-40fb-b6f3-6029007b6593"
+      },
+      "task-id": {
+        "S": "a47e780f-8b78-4c28-b063-a8ff6e41af19"
+      }
+    },
+    "NewImage": {
+      "title": {
+        "S": "testing trigger event source"
+      },
+      "project-id": {
+        "S": "7f84d97a-3842-40fb-b6f3-6029007b6593"
+      },
+      "task-id": {
+        "S": "a47e780f-8b78-4c28-b063-a8ff6e41af19"
+      }
+    },
+    "OldImage": {
+      "title": {
+        "S": "testing the trigger for event source"
+      },
+      "project-id": {
+        "S": "7f84d97a-3842-40fb-b6f3-6029007b6593"
+      },
+      "task-id": {
+        "S": "a47e780f-8b78-4c28-b063-a8ff6e41af19"
+      }
+    },
+    "SequenceNumber": "951326100000000007678127701",
+    "SizeBytes": 725,
+    "StreamViewType": "NEW_AND_OLD_IMAGES"
+  },
+  "eventSourceARN": "arn:aws:dynamodb:us-east-1:444444444444:table/stuff/stream/2016-03-12T04:07:09.571"
+}

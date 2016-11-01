@@ -1,6 +1,5 @@
 var test = require('tape')
-var lodash = require('lodash')
-var isArray = lodash.isArray
+var isArray = Array.isArray
 var lambda = require('../')
 
 /**

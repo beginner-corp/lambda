@@ -1,11 +1,10 @@
-var async = require('async')
-var lodash = require('lodash')
-var errback = require('serialize-error')
-var isArray = lodash.isArray
-var isFunction = lodash.isFunction
-var reject = lodash.reject
+var waterfall  = require('run-waterfall')
+var isArray    = Array.isArray
+var isFunction = require('lodash.isFunction')
+var reject     = require('lodash.reject')
+var errback    = require('serialize-error')
 
-function lambda() {
+module.exports = function lambda() {
 
   var firstRun = true                    // important to keep this here in this closure
   var args = [].slice.call(arguments, 0) // grab the args
@@ -71,39 +70,6 @@ function lambda() {
     }
     
     // the real worker here
-    async.waterfall(fns, formatter)
+    waterfall(fns, formatter)
   }
 }
-
-/**
- * var lambda = require('@mallwins/lambda')
- *
- * var fn = lambda(function (event, data) {
- *  callback(null, {hello:'world'})
- * })
- *
- * // fake run locally
- * lambda.local(fn, fakeEvent, function done(err, result) {
- *    if (err) {
- *      console.error(err)
- *    }
- *    else {
- *      console.log(result) // logs: {ok:true, hello:'world'}
- *    }
- * })
- */
-lambda.local = function offlineInvoke(fn, event, callback) {
-  var context = {
-    succeed: function offlineSucceed(x) {
-      if (x.ok) {
-        callback(null, x)
-      }
-      else {
-        callback(x.errors)
-      }
-    }
-  }
-  fn(event, context)
-}
-
-module.exports = lambda
