@@ -1,6 +1,6 @@
 var waterfall  = require('run-waterfall')
 var isArray    = Array.isArray
-var isFunction = require('lodash.isFunction')
+var isFunction = require('lodash.isfunction')
 var reject     = require('lodash.reject')
 var errback    = require('serialize-error')
 
