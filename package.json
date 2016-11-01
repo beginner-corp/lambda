@@ -1,6 +1,6 @@
 {
   "name": "@smallwins/lambda",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "Author your AWS Lambda functions as node style errbacks.",
   "main": "bundle",
   "scripts": {
