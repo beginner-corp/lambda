@@ -5,7 +5,8 @@
   "main": "bundle",
   "scripts": {
     "test": "tape test/**-test.js | tap-spec",
-    "build": "browserify index.js -t bubleify --standalone utils --node | uglifyjs -c > bundle.js"
+    "build": "browserify index.js -t bubleify --standalone utils --node | uglifyjs -c > bundle.js",
+    "prepublish": "npm test && npm run build"
   },
   "keywords": [
     "aws",
