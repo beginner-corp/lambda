@@ -2,9 +2,10 @@
   "name": "@smallwins/lambda",
   "version": "5.1.2",
   "description": "Author your AWS Lambda functions as node style errbacks.",
-  "main": "index",
+  "main": "bundle",
   "scripts": {
-    "test": "tape test/**-test.js | tap-spec"
+    "test": "tape test/**-test.js | tap-spec",
+    "build": "browserify index.js -t bubleify --standalone utils --node | uglifyjs -c > bundle.js"
   },
   "keywords": [
     "aws",
@@ -15,10 +16,11 @@
   "license": "Apache-2",
   "devDependencies": {
     "aws-sdk": "^2.2.47",
+    "browserify": "^13.1.1",
+    "bubleify": "^0.6.0",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.1"
-  },
-  "dependencies": {
+    "tape": "^4.5.1",
+    "uglifyjs": "^2.4.10",
     "lodash.isfunction": "^3.0.8",
     "lodash.reject": "^4.6.0",
     "run-parallel": "^1.1.6",
