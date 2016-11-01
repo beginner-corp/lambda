@@ -1,6 +1,6 @@
 var test = require('tape')
 var lambda = require('../')
-var isFunction = require('lodash.isFunction')
+var isFunction = require('lodash.isfunction')
 var isArray = Array.isArray
 
 test('sanity', t=> {
