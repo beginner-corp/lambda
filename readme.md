@@ -118,7 +118,7 @@ In the example above our functions are executed in series passing event through 
 
 #### :floppy_disk: save a record from a dynamodb trigger :boom::gun:
 
-AWS DynamoDB triggers invoke a Lambda function if anything happens to a table. The payload is usually a big array of records. `@smallwins/lambda` allows you to focus on processing a single record but executes the function in parallel on all the results in the Dynamo invocation. For convenience the same middleware chaining is supported.
+AWS DynamoDB triggers invoke a Lambda function if anything happens to a table. The payload is usually a big array of records. `@smallwins/lambda` allows you to focus on processing a single record but executes the function in parallel on all the results in the Dynamo invocation.
 
 ```javascript
 var lambda = require('@smallwins/lambda')
@@ -129,6 +129,33 @@ function save(record, callback) {
 }
 
 exports.handler = lambda.triggers.dynamo.save(save)
+```
+
+#### :bookmark: respond to a message published on sns
+
+Its very common to compose your application events using AWS SNS. `@smallwins/lambda` runs in parallel over the records in the trigger, similar to the Dynamo.
+
+```javascript
+// somewhere in your codebase you'll want to trigger a lambda
+var aws = require('aws-sdk')
+var sns = new aws.SNS
+
+sns.publish({
+  Message: JSON.stringify({hello:'world'}),
+  TopicArn: 'arn:aws:sns:us-east-1'
+}, console.log)
+```
+
+```javascript
+// then, in your lambda
+var lambda = require('@smallwins/lambda')
+
+function msg(message, callback) {
+  console.log('received msg ', message) // logs {hello:"world"}
+  callback(null, message)
+}
+
+exports.handler = lambda.triggers.sns(msg)
 ```
 
 ## :love_letter: api :thought_balloon::sparkles:
@@ -142,6 +169,7 @@ exports.handler = lambda.triggers.dynamo.save(save)
 - `lambda.triggers.dynamo.all(fn)` run on INSERT, MODIFY and REMOVE
 - `lambda.triggers.dynamo.save(fn)` run on INSERT and MODIFY
 - `lambda.triggers.dynamo.change(fn)` run on INSERT and REMOVE
+- `lambda.triggers.sns(fn)` run for every sns trigger invocation; expects `record.Sns.Message` to be a serialized JSON payload
 
 A handler looks something like this:
 

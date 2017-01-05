@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "xxx",
+                "TopicArn": "arn:aws:sns",
+                "Subject": null,
+                "Message": "{\"hello\":\"world\"}",
+                "Timestamp": "2017-01-05T03:06:39.557Z",
+                "SignatureVersion": "1",
+                "Signature": "",
+                "SigningCertUrl": "",
+                "UnsubscribeUrl": "",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}
